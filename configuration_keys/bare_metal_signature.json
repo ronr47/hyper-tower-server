@@ -1,0 +1,12 @@
+{
+  "host_architecture": "x86_64",
+  "processor_model": "Intel(R) Celeron(R) N4000 CPU @ 1.10GHz
+BIOS Intel(R) Celeron(R) N4000 CPU @ 1.10GHz To Be Filled By O.E.M. CPU @ 1.1GHz",
+  "logical_cores_present": 2,
+  "threads_per_physical_core": 1,
+  "cache_topology": {
+    "l1_data": "cache: 48",
+    "l2_unified": "cache: 4",
+    "l3_shared": ""
+  }
+}

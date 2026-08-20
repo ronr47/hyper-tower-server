@@ -1,0 +1,1 @@
+/home/ru/native_high_performance/native_high_performance/target/x86_64-unknown-linux-gnu/release/libnative_high_performance.rlib: /home/ru/native_high_performance/native_high_performance/src/control_plane/mod.rs /home/ru/native_high_performance/native_high_performance/src/dataplane/mod.rs /home/ru/native_high_performance/native_high_performance/src/lib.rs

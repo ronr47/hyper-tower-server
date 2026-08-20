@@ -1,0 +1,5 @@
+# POINT THIS TO AN ACTUAL LOCAL PATH OF A GGUF FILE ON YOUR MACHINE
+FROM /path/to/your/local/model.gguf
+
+# Set parameters if desired
+PARAMETER num_ctx 4096
