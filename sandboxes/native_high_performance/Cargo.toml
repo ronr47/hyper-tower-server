@@ -1,0 +1,22 @@
+[package]
+name = "native_high_performance"
+version = "2.0.0"
+edition = "2021"
+
+[[bin]]
+name = "native_scraper"
+path = "src/bin_scraper.rs"
+
+[[bin]]
+name = "native_metrics"
+path = "src/bin_metrics.rs"
+
+[dependencies]
+libc = "0.2"
+tokio = { version = "1.38", features = ["rt-multi-thread", "macros", "time"] }
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"

@@ -1,0 +1,75 @@
+from std.time import sleep
+from python import Python
+
+fn read_meminfo() raises -> Tuple[Float64, Float64]:
+    var builtins = Python.import_module("builtins")
+    var f = builtins.open("/proc/meminfo", "r")
+    
+    var mem_total: Float64 = 0.0
+    var mem_free: Float64 = 0.0
+    
+    # We use dynamic loop or read lines
+    for i in range(50): 
+        var line = f.readline()
+        if not line:
+            break
+        var line_str = str(line)
+        if "MemTotal:" in line_str:
+            var tokens = line.split()
+            # Convert PythonObject directly to native Mojo Int, then cast to Float64
+            mem_total = Float64(int(tokens[1]))
+        elif "MemFree:" in line_str:
+            var tokens = line.split()
+            mem_free = Float64(int(tokens[1]))
+            
+    f.close()
+    return Tuple(mem_total, mem_free)
+
+fn get_cpu_usage(prev_idle: Int, prev_total: Int) raises -> Tuple[Float64, Int, Int]:
+    var builtins = Python.import_module("builtins")
+    var f = builtins.open("/proc/stat", "r")
+    var line = f.readline()
+    f.close()
+
+    var parts = line.split()
+    
+    # Extract PythonObject values and immediately cast them to native Mojo Ints
+    var user = int(parts[1])
+    var nice = int(parts[2])
+    var sys = int(parts[3])
+    var idle = int(parts[4])
+
+    var active = user + nice + sys
+    var total = active + idle
+
+    var active_diff = active - (prev_total - prev_idle)
+    var total_diff = total - prev_total
+
+    var cpu_pct: Float64 = 0.0
+    if total_diff > 0:
+        cpu_pct = (Float64(active_diff) / Float64(total_diff)) * 100.0
+
+    return Tuple(cpu_pct, idle, total)
+
+fn print_system_state(prev_idle: Int, prev_total: Int) raises -> Tuple[Int, Int]:
+    var cpu_data = get_cpu_usage(prev_idle, prev_total)
+    var mem_data = read_meminfo()
+
+    var ram_used_gb = (mem_data[0] - mem_data[1]) / (1024.0 * 1024.0)
+    print("[Mojo] CPU:", cpu_data[0], "% | RAM Used:", ram_used_gb, "GB")
+
+    return Tuple(cpu_data[1], cpu_data[2])
+
+fn main() raises:
+    var prev_idle = 0
+    var prev_total = 0
+
+    var init_state = get_cpu_usage(prev_idle, prev_total)
+    prev_idle = init_state[1]
+    prev_total = init_state[2]
+
+    for i in range(3):
+        sleep(1.0)
+        var next_state = print_system_state(prev_idle, prev_total)
+        prev_idle = next_state[0]
+        prev_total = next_state[1]
