@@ -1,0 +1,8 @@
+
+# Historical binary artifact filters
+*.elf
+*.exe
+*.img
+*.bin
+*.so
+target/
