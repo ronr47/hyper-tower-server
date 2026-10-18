@@ -22,9 +22,14 @@ jobs:
 
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            server -> target
 
       - name: Build
+        working-directory: ./server
         run: cargo build --verbose
 
       - name: Run tests
+        working-directory: ./server
         run: cargo test --verbose

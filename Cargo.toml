@@ -1,8 +1,5 @@
 [workspace]
-resolver = "2"
 members = [
-    "sandboxes/my_project",
-    "sandboxes/native_high_performance",
-    "sandboxes/native_metrics",
-    "sandboxes/volatile_os_engine",
+    # Add your member crates here, e.g. "crates/*"
 ]
+resolver = "2"
