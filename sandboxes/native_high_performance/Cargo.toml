@@ -15,8 +15,3 @@ path = "src/bin_metrics.rs"
 libc = "0.2"
 tokio = { version = "1.38", features = ["rt-multi-thread", "macros", "time"] }
 
-[profile.release]
-opt-level = 3
-lto = "fat"
-codegen-units = 1
-panic = "abort"

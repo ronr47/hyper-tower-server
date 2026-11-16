@@ -22,11 +22,11 @@ async fn main() -> Result<(), &'static str> {
     match routing_token {
         "--scraper" => {
             println!("[Execution] Launching Zero-Copy Scraping Engine Validation Pass...");
-            let mut control_ring = dataplane::ScraperControlRing { head: 0, tail: 0 };
+            let control_ring = dataplane::ScraperControlRing { head: 0, tail: 0 };
             println!("Scraper Control Ring baseline safe at [Head: {}]", control_ring.head);
             
             // Symbol link validation
-            let _ptr = dataplane::scrape_database_page_block as usize;
+            let _ptr = dataplane::scrape_database_page_block as *const () as usize;
             println!("Verified data-plane scraper function vector: 0x{:X}", _ptr);
             Ok(())
         }
