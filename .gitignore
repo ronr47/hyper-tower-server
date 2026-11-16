@@ -6,3 +6,7 @@
 *.bin
 *.so
 target/
+
+# Private keys & node secrets
+configuration_keys/*private*
+configuration_keys/phone.conf
